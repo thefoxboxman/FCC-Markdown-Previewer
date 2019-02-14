@@ -6,10 +6,83 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" type="text/css" href="./styles.css">
 	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	<script src=//cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js> </script>
 	
+
 	<title>FCC Markdown Previewer</title>
 </head>
 <body>
-	hello from body
+	<div id="root"></div>
+<!-- import react, react-dom, babel -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+	
+	<!-- react script -->
+	<script type="text/babel">
+
+
+	class Application extends React.Component {
+	render() {
+		return (
+			<div className="container">
+				<div className="row">
+					<div className="col-xs-12">
+						<h1 className="text-center">Markdown Live Preview</h1>
+						<hr />
+					</div>
+				</div>
+				<UserInput />
+			</div>
+		)
+	}
+}
+
+class UserInput extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			md: '# Sample Markdown Heading\n\nEdit or replace this\n-----------\n\n### Another deeper heading\n\nParagraphs are separated by a blank line.\n\nLeave 2 spaces at the end of a line to do a  line break\n\nText attributes *italic*, **bold**,\n`monospace`, ~~strikethrough~~ .\n\nUnordered list:\n\n  * apples\n  * oranges\n  * pears\n\nNumbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\n---\n\n#### '
+		};
+	}
+
+	updatePreview(e) {
+		this.setState({
+			md: e.target.value
+		});
+	}
+
+	render() {
+		return (
+			<div className="row">
+				<div className="col-md-6">
+					<h3 className="text-center">Enter Markdown</h3>
+					<textarea type="text" className="md-input" value={this.state.md} onChange={this.updatePreview.bind(this)} />
+				</div>
+				<div className="col-md-6">
+					<h3 className="text-center">Result</h3>
+					<MarkdownPreview markdown={this.state.md} />
+				</div>
+			</div>
+		)
+	}
+}
+
+class MarkdownPreview extends React.Component {
+
+	createMarkup() {
+		return { __html: marked(this.props.markdown) }
+	}
+
+	render() {
+		return (
+			<div className="well" dangerouslySetInnerHTML={this.createMarkup()}>
+			</div>
+		)
+	}
+}
+
+ReactDOM.render(<Application />, document.getElementById('root'));
+	</script>
 </body>
 </html>
