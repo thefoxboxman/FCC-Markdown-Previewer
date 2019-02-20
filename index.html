@@ -5,14 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" type="text/css" href="./styles.css">
-	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	
 	<script src=//cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js> </script>
 	
 
 	<title>FCC Markdown Previewer</title>
 </head>
 <body>
+	<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+	
 	<div id="root"></div>
+
+
 <!-- import react, react-dom, babel -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
@@ -42,7 +46,8 @@ class UserInput extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			md: '# Sample Markdown Heading\n\nEdit or replace this\n-----------\n\n### Another deeper heading\n\nParagraphs are separated by a blank line.\n\nLeave 2 spaces at the end of a line to do a  line break\n\nText attributes *italic*, **bold**,\n`monospace`, ~~strikethrough~~ .\n\nUnordered list:\n\n  * apples\n  * oranges\n  * pears\n\nNumbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\n---\n\n#### '
+			md: 'Edit or replace this\n-----------\n\n # Sample Markdown Heading (h1)\n\n## Sub heading (h2) \n\n\My favorite search engine is [Duck Duck Go](https://duckduckgo.com)\n\nParagraphs are separated by a blank line.\n\nLeave 2 spaces at the end of a line to do a line break \n\n   Text attributes: *italic*, **bold**,`monospace`, ~~strikethrough~~ .\n\n Inline code suround with backticks `this is inline code`\n\n To create code blocks, indent every line of the block by at least four spaces or one tab.\n\n    <html>\n      <div>\n      </div>\n    </html> \n\nUnordered list:\n\n  * apples\n  * oranges\n  * pears\n\nNumbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\n This is a horizontal rule\n---\n\nTo create a blockquote, add a > in front of a paragraph.\n\n>"the quick brown fox jumped over the lazy dog."\n\nTo add an image, add an exclamation mark (!), followed by alt text in brackets [], and the path or URL to the image asset in parentheses ().\n\n![This is a random unsplash image](https://source.unsplash.com/random)\
+			#### '
 		};
 	}
 
@@ -57,7 +62,7 @@ class UserInput extends React.Component {
 			<div className="row">
 				<div className="col-md-6">
 					<h3 className="text-center">Enter Markdown</h3>
-					<textarea type="text" className="md-input" value={this.state.md} onChange={this.updatePreview.bind(this)} />
+					<textarea type="text" className="md-input" id="editor" value={this.state.md} onChange={this.updatePreview.bind(this)} />
 				</div>
 				<div className="col-md-6">
 					<h3 className="text-center">Result</h3>
@@ -76,7 +81,8 @@ class MarkdownPreview extends React.Component {
 
 	render() {
 		return (
-			<div className="well" dangerouslySetInnerHTML={this.createMarkup()}>
+			<div className="well" id ="preview"
+			dangerouslySetInnerHTML={this.createMarkup()}>
 			</div>
 		)
 	}
